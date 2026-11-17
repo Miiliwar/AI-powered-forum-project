@@ -5,12 +5,17 @@ import { listQuestionsValidation } from "../validations/question.validation.js";
 
 const router = express.Router();
 
-/
+/**
  * @route GET /api/questions
  * @desc List questions (optional ?search=keyword, ?mine=true, ?page, ?limit)
  * @access Private
  */
-router.get("/",authenticateUser,listQuestionsValidation, listQuestionsController);
+router.get(
+  "/",
+  authenticateUser,
+  listQuestionsValidation,
+  listQuestionsController,
+);
 
 //implement your other routes here (declare /search before /:questionHash)
 

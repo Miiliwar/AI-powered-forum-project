@@ -1,12 +1,14 @@
-<<<<<<< HEAD
 import { StatusCodes } from "http-status-codes";
-import { listQuestionsService } from "../service/question.service.js";
+import {
+  listQuestionsService,
+  getSingleQuestionService,
+} from "../service/question.service.js";
 
 /**
  * GET /api/questions
  * Query: search, mine, page, limit
  */
-// Logic fotr getting the list of all questions
+// Logic for getting the list of all questions
 export const listQuestionsController = async (req, res, next) => {
   try {
     const { search, mine, page, limit } = req.query;
@@ -22,10 +24,16 @@ export const listQuestionsController = async (req, res, next) => {
     res.status(StatusCodes.OK).json({
       success: true,
       count: result.questions.length,
-=======
-import { StatusCodes } from 'http-status-codes';
-import { getSingleQuestionService } from '../service/question.service.js';
+      ...result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
+/**
+ * GET /api/questions/:questionHash
+ */
 export const getSingleQuestionController = async (req, res, next) => {
   try {
     const { questionHash } = req.params;
@@ -34,8 +42,7 @@ export const getSingleQuestionController = async (req, res, next) => {
 
     res.status(StatusCodes.OK).json({
       success: true,
-      message: 'Question fetched successfully',
->>>>>>> origin/main
+      message: "Question fetched successfully",
       ...result,
     });
   } catch (error) {

@@ -1,5 +1,7 @@
-<<<<<<< HEAD
 import { safeExecute } from "../../../../db/config.js";
+import { NotFoundError } from "../../../utils/errors/index.js";
+
+const ANSWERS_LIMIT = 100;
 
 const escapeLike = (value) => value.replace(/[\\%_]/g, (ch) => `\\${ch}`);
 
@@ -61,13 +63,21 @@ export const listQuestionsService = async ({
       id: r.user_id,
       firstName: r.first_name,
       lastName: r.last_name,
-=======
-import { safeExecute } from '../../../../db/config.js';
-import { NotFoundError } from '../../../utils/errors/index.js';
+    },
+  }));
 
-const ANSWERS_LIMIT = 100;
+  return {
+    questions,
+    pagination: {
+      page: safePage,
+      limit: safeLimit,
+      total,
+      totalPages: Math.ceil(total / safeLimit),
+    },
+  };
+};
 
-export const getSingleQuestionService = async questionHash => {
+export const getSingleQuestionService = async (questionHash) => {
   const questionSql = `
     SELECT
       q.question_id AS id,
@@ -88,7 +98,7 @@ export const getSingleQuestionService = async questionHash => {
   const questionRows = await safeExecute(questionSql, [questionHash]);
 
   if (questionRows.length === 0) {
-    throw new NotFoundError('Question not found');
+    throw new NotFoundError("Question not found");
   }
 
   const questionData = questionRows[0];
@@ -135,7 +145,7 @@ export const getSingleQuestionService = async questionHash => {
     },
   };
 
-  const answers = answerRows.map(answer => ({
+  const answers = answerRows.map((answer) => ({
     id: answer.id,
     content: answer.content,
     createdAt: answer.createdAt,
@@ -144,25 +154,15 @@ export const getSingleQuestionService = async questionHash => {
       id: answer.authorId,
       firstName: answer.authorFirstName,
       lastName: answer.authorLastName,
->>>>>>> origin/main
     },
   }));
 
   return {
-<<<<<<< HEAD
-    questions,
-    pagination: {
-      page: safePage,
-      limit: safeLimit,
-      total,
-      totalPages: Math.ceil(total / safeLimit),
-=======
     question,
     answers,
     answersMeta: {
       limit: ANSWERS_LIMIT,
       total: answerCount,
->>>>>>> origin/main
     },
   };
 };

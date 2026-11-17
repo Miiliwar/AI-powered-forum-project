@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { StatusCodes } from "http-status-codes";
 import { listQuestionsService } from "../service/question.service.js";
 
@@ -21,6 +22,20 @@ export const listQuestionsController = async (req, res, next) => {
     res.status(StatusCodes.OK).json({
       success: true,
       count: result.questions.length,
+=======
+import { StatusCodes } from 'http-status-codes';
+import { getSingleQuestionService } from '../service/question.service.js';
+
+export const getSingleQuestionController = async (req, res, next) => {
+  try {
+    const { questionHash } = req.params;
+
+    const result = await getSingleQuestionService(questionHash);
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: 'Question fetched successfully',
+>>>>>>> origin/main
       ...result,
     });
   } catch (error) {

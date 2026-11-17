@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { query } from "express-validator";
 import { validationErrorHandler } from "../../../middleware/validation-handler.js";
 
@@ -20,6 +21,17 @@ export const listQuestionsValidation = [
     .optional()
     .isInt({ min: 1, max: 100 })
     .withMessage("limit must be between 1 and 100"),
+=======
+import { param } from 'express-validator';
+import { validationErrorHandler } from '../../../middleware/validation-handler.js';
+
+export const singleQuestionValidation = [
+  param('questionHash')
+    .matches(/^[a-f0-9]{16}$/)
+    .withMessage(
+      'Question hash must be exactly 16 lowercase hexadecimal characters'
+    ),
+>>>>>>> origin/main
 
   validationErrorHandler,
 ];
